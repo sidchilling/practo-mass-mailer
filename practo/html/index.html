@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+
+{% autoescape true %}
+<html>
+    <head>
+        <title>Practo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="/css/bootstrap-responsive.min.css" />
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/libs/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/js/libs/jquery.tmpl.js"></script>
+        <script type="text/javascript" src="/js/libs/underscore-min.js"></script>
+        <script type="text/javascript" src="/js/libs/json2.js"></script>
+        <script type="text/javascript" src="/js/libs/backbone-min.js"></script>
+        <script type="text/javascript" src="/js/main.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                window.init();
+            });
+        </script>
+    </head>
+    <body style="width: 960px;">
+        <div class="container" id="content">Loading...</div>
+        <div id="compose_email_modal_div"></div>
+    </body>
+</html>
+
+{% raw %}
+
+<script type="text/x-jquery-template" id="error_msg_template">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="alert alert-block alert-error fade in">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4 class="alert-heading">${heading}</h4>
+                <p>${message}</p>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-jquery-template" id="patients_table_template">
+    <div class="row-fluid">
+        <div class="span12" style="text-align: center;">
+            <h2>Paitents</h2>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12" style="text-align: right;">
+            <button type="button" id="view_emails" class="btn btn-large">View Emails Sent</button>
+            <button type="button" id="send_email_btn" class="btn btn-large btn-primary"><i class="icon-envelope icon-white"></i> Send Email</button>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12" style="text-align: center; margin-top: 20px; padding-left: 10px;">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Date of Birth</th>
+                        <th>Mobile #</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{each(i, paitent) patients}}
+                        <tr>
+                            <td>
+                                {{if $.trim(paitent.email).length > 0}}
+                                    <input type="checkbox" class="email_select" data-id="${paitent.id}" data-name="${paitent.name}" data-email="${paitent.email}" />
+                                {{else}}
+                                    -
+                                {{/if}}
+                            </td>
+                            <td>${paitent.id}</td>
+                            <td>${paitent.name}</td>
+                            <td>${paitent.email}</td>
+                            <td>${paitent.dob}</td>
+                            <td>${paitent.mobile}</td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-jquery-template" id="compose_email_template">
+    <div class="modal hide fade" id="compose_email_modal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Compose Email</h3>
+        </div>
+        <div style="margin-top: 5px;" id="modal_messages"></div>
+        <div class="modal-body">
+            <div class="row-fluid">
+                <div class="span12 form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="email_subject">Subject</label>
+                        <div class="controls">
+                            <input type="text" name="email_subject" id="email_subject" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="email_content">Email</label>
+                        <div class="controls">
+                            <textarea id="email_content" name="email_content" rows="4" cols="50"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button class="btn btn-primary" id="send_email" data-loading-text="Sending...">Send</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-jquery-template" id="success_template">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="alert alert-block alert-success fade in">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4 class="alert-heading">Email Sent</h4>
+                <p>Congrats! Your email has been sent to the selected users.</p>
+            </div>
+        </div>
+    </div>
+</script>
+
+{% endraw %}
+{% endautoescape %}

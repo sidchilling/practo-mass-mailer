@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+{% autoescape true %}
+<html>
+    <head>
+        <title>Practo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/libs/bootstrap.min.js"></script>
+    </head>
+    <body style="width: 960px;">
+        <div class="container" style="text-align: middle;">
+            <div class="row-fluid">
+                <div class="span12">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Email</th>
+                                <th>Users</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for email in emails %}
+                                <tr>
+                                    <td>{{ email.subject }}</td>
+                                    <td>{{ email.email }}</td>
+                                    <td>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <td>#</td>
+                                                    <td>Name</td>
+                                                    <td>Email ID</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for user in email.users %}
+                                                    <tr>
+                                                        <td>{{ user.id }}</td>
+                                                        <td>{{ user.name }}</td>
+                                                        <td>{{ user.email }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+{% endautoescape %}
